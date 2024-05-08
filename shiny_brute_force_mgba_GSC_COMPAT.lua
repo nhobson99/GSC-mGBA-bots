@@ -28,6 +28,12 @@ local enemyAddr = 0xd20c
 local encounterDir1 = C.GB_KEY.RIGHT
 local encounterDir2 = C.GB_KEY.DOWN
 
+-- desiredSpecies
+-- Tells the script which mon you are looking for
+-- Look up the species ID here: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_index_number_(Generation_II)
+-- If -1, searches for all possible species
+local desiredSpecies = 206
+
 -- Main function
 local function onFrame()
     currentFrame = emu:currentFrame() - previousFrame
@@ -56,11 +62,17 @@ local function onFrame()
         previousFrame = emu:currentFrame() + 1
         return
     end
-    if emu:read8(enemyAddr+0x21) == 1 then
+    if emu:read8(enemyAddr+0x21) == 1 and emu:read8(enemyAddr+0x22) > 0 then
         emu:clearKey(C.GB_KEY.LEFT)
         emu:clearKey(C.GB_KEY.DOWN)
 
         if currentFrame > 1 then
+            if desiredSpecies ~= -1 and emu:read8(enemyAddr+0x22) ~= desiredSpecies then
+                emu:loadStateBuffer(state)
+                previousFrame = emu:currentFrame() + 200
+                console:log("Not the desired species. Moving on...")
+                return
+            end
             emu:clearKey(C.GB_KEY.LEFT)
             emu:clearKey(C.GB_KEY.DOWN)
             emu:clearKey(C.GB_KEY.RIGHT)
