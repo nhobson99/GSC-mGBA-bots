@@ -5,7 +5,10 @@ A collection of bots for shiny or otherwise hunting in the GBC Pokemon games!
 Load any of these scripts in mGBA (through the Tools->Scripting submenu) after entering tall grass and cornering. You should use a repel _before_ running any of the scripts if you want to use the repel trick to limit encounters, though you should know this hurts the shiny rates of certain encounters.
 
 ## encounter_and_flee_GSC_COMPAT
-This is compatible with all the GBC Pokemon games, including Korean and Japanese versions! (Just modify the address as shown in the Lua file.) The script will terminate automatically when a shiny is encountered. It works at unbounded speed, tested for many, many hours at over 8000fps.
+This version gets into a wild encounter, and if it's not shiny, it runs away. This is compatible with all the GBC Pokemon games, including Korean and Japanese versions! (Just modify the address as shown in the Lua file.) The script will terminate automatically when a shiny is encountered. It works at unbounded speed, tested for many, many hours at over 8000fps.
+
+## shiny_brute_force_mgba_GSC_COMPAT
+This version savestates before an encounter, and tries many, many frames, reloading the savestate as necessary and making a new one. This is compatible with all the GBC Pokemon games, including Korean and Japanese versions! (Just modify the address as shown in the Lua file.) The script will terminate automatically when a shiny is encountered. It works at unbounded speed, tested for many, many hours at over 8000fps.
 
 # Speed
 These scripts are tested at very high speeds to ensure they are deterministic. For the fastest speeds:
