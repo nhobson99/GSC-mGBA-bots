@@ -5,7 +5,7 @@ end
 
 local state = emu:saveStateBuffer()
 local totalEncounterCounter = 0
-local previousFrame = emu:currentFrame() + 100
+local previousFrame = emu:currentFrame() + 10
 local buffer = console:createBuffer("Tracker")
 local cb
 
@@ -25,78 +25,63 @@ local enemyAddr = 0xd20c
 -- It's best to use the corner method:
 --     Align your character with a corner
 --     The two directions with walls, use these as encounterDir1 and encounterDir2
-local encounterDir1 = C.GB_KEY.RIGHT
+local encounterDir1 = C.GB_KEY.LEFT
 local encounterDir2 = C.GB_KEY.DOWN
 
 -- Main function
 local function onFrame()
     local currentFrame = emu:currentFrame() - previousFrame
 
-    if currentFrame > 1200 then
+    if currentFrame > 650 then
         emu:clearKey(C.GB_KEY.A)
         emu:clearKey(C.GB_KEY.B)
         emu:clearKey(C.GB_KEY.LEFT)
         emu:clearKey(C.GB_KEY.RIGHT)
         emu:clearKey(C.GB_KEY.UP)
         emu:clearKey(C.GB_KEY.DOWN)
-        previousFrame = emu:currentFrame() + 200
+        previousFrame = emu:currentFrame() + 10
+        
         return
     end
 
-    if emu:read8(enemyAddr+0x22) == 0 then
-        if currentFrame == 2 then
+    if emu:read8(enemyAddr+0x22) == 0 and emu:read8(enemyAddr+0x21) == 0 and currentFrame < 200 then
+        if currentFrame == 0 then
+        elseif currentFrame == 2 then
             emu:addKey(encounterDir1)
-        end
-        if currentFrame == 4 then
+        elseif currentFrame == 4 then
             emu:clearKey(encounterDir1)
             emu:addKey(encounterDir2)
-        end
-        if currentFrame >= 6 then
+        elseif currentFrame >= 6 then
+            emu:clearKey(encounterDir1)
             emu:clearKey(encounterDir2)
             previousFrame = emu:currentFrame() + 1
         end
         return
     end
-    if emu:read8(enemyAddr+0x21) == 1 then
-        if currentFrame >= 990 then
-            emu:addKey(C.GB_KEY.B)
-            return
-        end
-        if currentFrame >= 910 then
+    if emu:read8(enemyAddr+0x22) > 0 and emu:read8(enemyAddr+0x21) > 0 then
+        if currentFrame >= 650 then
             emu:clearKey(C.GB_KEY.B)
-            return
-        end
-        if currentFrame >= 900 then
+        elseif currentFrame >= 635 then
             emu:addKey(C.GB_KEY.B)
-            return
-        end
-        if currentFrame >= 890 then
+        elseif currentFrame >= 630 then
+            emu:clearKey(C.GB_KEY.B)
+        elseif currentFrame >= 625 then
+            emu:addKey(C.GB_KEY.B)
+        elseif currentFrame >= 545 then
             emu:clearKey(C.GB_KEY.A)
-            return
-        end
-        if currentFrame >= 880 then
+        elseif currentFrame >= 540 then
             emu:clearKey(C.GB_KEY.DOWN)
             emu:addKey(C.GB_KEY.A)
-            return
-        end
-        if currentFrame >= 870 then
+        elseif currentFrame >= 535 then
             emu:clearKey(C.GB_KEY.RIGHT)
             emu:addKey(C.GB_KEY.DOWN)
-            return
-        end
-        if currentFrame >= 860 then
+        elseif currentFrame >= 530 then
             emu:addKey(C.GB_KEY.RIGHT)
-            return
-        end
-        if currentFrame >= 410 then
+        elseif currentFrame >= 205 then
             emu:clearKey(C.GB_KEY.B)
-            return
-        end
-        if currentFrame >= 400 then
+        elseif currentFrame > 200 then
             emu:addKey(C.GB_KEY.B)
-            return
-        end
-        if currentFrame == 300 then
+        elseif currentFrame == 200 then
             emu:clearKey(C.GB_KEY.LEFT)
             emu:clearKey(C.GB_KEY.DOWN)
             emu:clearKey(C.GB_KEY.RIGHT)
@@ -119,13 +104,14 @@ local function onFrame()
             buffer:print("Compound Odds: " .. string.format("%.3f", 100*(1-(8191/8192)^totalEncounterCounter)) .. "%\n")
             buffer:print("DVS:\n  def(" .. defense .. ")\n  atk(" .. attack .. ")\n  speed(" .. speed .. ")\n  spec(" .. special .. ")")
             
-
             if isShiny(attack, defense, speed, special) then
                 console:log("Shiny Encounter! Total Encounters: " .. totalEncounterCounter)
+                
+                -- Enable alarm by uncommenting this line (Windows only, though you could modify it for Mac/Linux/etc)
+                -- os.execute("explorer.exe https://www.youtube.com/video/SAjRuGdXeOE")
+
                 callbacks:remove(cb)
             end
-
-            return
         end
     end
 end
