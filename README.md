@@ -4,6 +4,9 @@ A collection of bots for shiny or otherwise hunting in the GBC Pokemon games!
 # Usage
 Load any of these scripts in mGBA (through the Tools->Scripting submenu) after entering tall grass and cornering. You should use a repel _before_ running any of the scripts if you want to use the repel trick to limit encounters, though you should know this hurts the shiny rates of certain encounters.
 
+# NEW
+You can now enable an alarm when a shiny is found for even _more_ AFK! Just uncomment the alarm line by removing the dash.
+
 ## encounter_and_flee_GSC_COMPAT
 This version gets into a wild encounter, and if it's not shiny, it runs away. This is compatible with all the GBC Pokemon games, including Korean and Japanese versions! (Just modify the address as shown in the Lua file.) The script will terminate automatically when a shiny is encountered. It works at unbounded speed, tested for many, many hours at over 8000fps.
 
