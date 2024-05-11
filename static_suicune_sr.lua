@@ -43,6 +43,10 @@ local function onFrame()
 
         if isShiny(attack, defense, speed, special) then
             console:log("Shiny Encounter! Total Encounters: " .. totalEncounterCounter)
+
+            -- Enable alarm by uncommenting this line (Windows only, though you could modify it for Mac/Linux/etc)
+            -- os.execute("explorer.exe https://www.youtube.com/video/SAjRuGdXeOE")
+            
             callbacks:remove(cb)
         else
             console:log("Reset")
