@@ -25,7 +25,7 @@ local function onFrame()
 
     local currentFrame = emu:currentFrame() - previousFrame
 
-    if emu:read8(enemyAddr+0x21) > 0 and emu:read8(enemyAddr+0x22) > 0 and currentFrame > 2100 then
+    if emu:read8(enemyAddr+0x21) > 0 and emu:read8(enemyAddr+0x22) > 0 and currentFrame > 2500 then
         -- Note: earlier versions of these scripts accidentally swapped speed and spec :)
         local enemyDVsAD = emu:read8(enemyAddr)
         local enemyDVsSS = emu:read8(enemyAddr+1)
@@ -43,6 +43,10 @@ local function onFrame()
 
         if isShiny(attack, defense, speed, special) then
             console:log("Shiny Encounter! Total Encounters: " .. totalEncounterCounter)
+            
+            -- Enable alarm by uncommenting this line (Windows only, though you could modify it for Mac/Linux/etc)
+            -- os.execute("explorer.exe https://www.youtube.com/video/SAjRuGdXeOE")
+
             callbacks:remove(cb)
         else
             console:log("Reset")
