@@ -16,6 +16,9 @@ This version savestates before an encounter, and tries many, many frames, reload
 ## static_suicune_sr
 This is literally just for catching Suicune. It has been tested on a livestream by Chaotic Meatball. To use it, just save a few tiles south of the Tin Tower entrance. Crystal only, for obvious reasons. It static resets until it encounters a shiny, then stops just like all the other scripts.
 
+## static_celebi_sr
+This is probably the last one for a while, unless I decide to pick this project up another time. Save two tiles south of the shrine in Ilex Forest with the Celebi event activated. Then, ^^^.
+
 ## shiny_roamers_rta
 This is for hunting Raikou and Entei in Crystal version (currently hardcoded for Raikou). Usage is as follows: Put repels as your first bag item, and save just south of the north gate to the Ruins of Alph. Then just run the script. Not thoroughly tested yet, and it's very slow. I wrote this specifically to be a real-time viable strat, equivalent to the player cycling and checking the Pokedex to find the roamer's location, then use a repel and encounter it, and soft reset if it's not shiny. If you don't care about doing things """legit""", then you can just use the shiny brute force method instead (savestate abuse, basically).
 
